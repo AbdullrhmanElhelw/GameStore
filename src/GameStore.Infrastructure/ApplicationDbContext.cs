@@ -1,11 +1,12 @@
 ﻿using GameStore.Domain.Abstractions;
 using GameStore.Domain.Developers;
 using GameStore.Domain.Games;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameStore.Infrastructure;
 
-public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IMediator mediator)
     : DbContext(options), IUnitOfWork
 {
     public DbSet<Game> Games => Set<Game>();
@@ -20,6 +21,27 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        return await base.SaveChangesAsync(cancellationToken);
+        var result = await base.SaveChangesAsync(cancellationToken);
+        await PublishDomainEventAsync();
+        return result;
+    }
+
+    private async Task PublishDomainEventAsync()
+    {
+        var domainEntities = ChangeTracker
+            .Entries<Entity>()
+            .Select(entity => entity.Entity)
+            .SelectMany(entity =>
+            {
+                var domainEvents = entity.GetDomainEvents();
+                entity.ClearDomainEvents();
+                return domainEvents;
+            })
+            .ToList();
+
+        foreach (var domainEvent in domainEntities)
+        {
+            await mediator.Publish(domainEvent);
+        }
     }
 }
