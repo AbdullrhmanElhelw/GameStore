@@ -8,6 +8,7 @@ public record Headquarters
     public City City { get; init; }
     public Street Street { get; init; }
     public ZipCode ZipCode { get; init; }
+
     public Headquarters(Country country, City city, Street street, ZipCode zipCode)
     {
         Check.NotNull(country, "country");
@@ -24,6 +25,7 @@ public record Headquarters
 public record Country
 {
     public string Value { get; init; }
+
     public Country(string value)
     {
         Check.NotNull(value, "value");
@@ -35,6 +37,7 @@ public record Country
 public record City
 {
     public string Value { get; init; }
+
     public City(string value)
     {
         Check.NotNull(value, "value");
@@ -46,6 +49,7 @@ public record City
 public record Street
 {
     public string Value { get; init; }
+
     public Street(string value)
     {
         Check.NotNull(value, "value");
@@ -57,6 +61,7 @@ public record Street
 public record ZipCode
 {
     public string Value { get; init; }
+
     public ZipCode(string value)
     {
         Check.NotNull(value, "value");

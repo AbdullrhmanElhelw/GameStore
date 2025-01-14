@@ -12,7 +12,7 @@ public sealed class Game : Entity
         Money price,
         ReleaseDate releaseDate,
         Developer developer
-        )
+    )
     {
         Name = name;
         Description = description;
@@ -22,7 +22,8 @@ public sealed class Game : Entity
     }
 
     private Game()
-    { }
+    {
+    }
 
     public Name Name { get; private set; }
     public Description Description { get; private set; }
@@ -38,7 +39,7 @@ public sealed class Game : Entity
         Money price,
         ReleaseDate releaseDate,
         Developer developer
-        )
+    )
     {
         return new Game(name, description, price, releaseDate, developer);
     }

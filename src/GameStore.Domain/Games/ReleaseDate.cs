@@ -4,7 +4,6 @@ namespace GameStore.Domain.Games;
 
 public record ReleaseDate
 {
-    public DateTime Value { get; init; }
     public ReleaseDate(DateTime value)
     {
         Check.NotNull(value, nameof(value));
@@ -12,6 +11,18 @@ public record ReleaseDate
         Check.NotFuture(value, nameof(value));
         Value = value;
     }
-    public static implicit operator DateTime(ReleaseDate releaseDate) => releaseDate.Value;
-    public static implicit operator ReleaseDate(DateTime releaseDate) => new(releaseDate);
+
+    public DateTime Value { get; init; }
+
+    public static implicit operator DateTime(ReleaseDate releaseDate)
+    {
+        return releaseDate.Value;
+    }
+
+    public static implicit operator ReleaseDate(DateTime releaseDate)
+    {
+        return new ReleaseDate(releaseDate);
+    }
+
+    public bool NotInFuture() => Value <= DateTime.UtcNow.Date;
 }

@@ -1,5 +1,8 @@
 ﻿using GameStore.Application.Abstractions.Clock;
 using GameStore.Domain.Abstractions;
+using GameStore.Domain.Developers;
+using GameStore.Domain.Games;
+using GameStore.Infrastructure.Caching.CachedRepositories;
 using GameStore.Infrastructure.Clock;
 using GameStore.Infrastructure.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +29,7 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString(ConnectionString.DefaultConnection)
-            ?? throw new InvalidOperationException("Connection string not found.");
+                               ?? throw new InvalidOperationException("Connection string not found.");
 
         services.AddSingleton(new ConnectionString(connectionString));
 
@@ -34,6 +37,10 @@ public static class DependencyInjection
             op.UseSqlServer(connectionString));
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
+
+        services.Decorate<IGameRepository, GameCachedRepository>();
+
+        services.Decorate<IDeveloperRepository, DeveloperCachedRepository>();
 
         return services;
     }

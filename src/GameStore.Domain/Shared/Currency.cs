@@ -6,7 +6,16 @@ public sealed record Currency
     public static readonly Currency Usd = new("USD");
     public static readonly Currency Eur = new("EUR");
 
-    private Currency(string code) => Code = code;
+    public static readonly IReadOnlyCollection<Currency> All =
+    [
+        Usd,
+        Eur
+    ];
+
+    private Currency(string code)
+    {
+        Code = code;
+    }
 
     public string Code { get; init; }
 
@@ -15,10 +24,4 @@ public sealed record Currency
         return All.FirstOrDefault(c => c.Code == code) ??
                throw new ApplicationException("The currency code is invalid");
     }
-
-    public static readonly IReadOnlyCollection<Currency> All =
-    [
-        Usd,
-        Eur
-    ];
 }

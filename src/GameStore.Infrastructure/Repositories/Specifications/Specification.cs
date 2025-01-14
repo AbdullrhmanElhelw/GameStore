@@ -1,5 +1,5 @@
-﻿using System.Linq.Expressions;
-using GameStore.Domain.Abstractions;
+﻿using GameStore.Domain.Abstractions;
+using System.Linq.Expressions;
 
 namespace GameStore.Infrastructure.Repositories.Specifications;
 

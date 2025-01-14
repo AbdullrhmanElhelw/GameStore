@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
-using FluentValidation;
+﻿using FluentValidation;
 using GameStore.Application.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace GameStore.Api.Middleware;
 
@@ -36,7 +36,7 @@ public class GlobalExceptionHandler : IExceptionHandler
                         _ => null
                     }
                 }
-            }, cancellationToken: cancellationToken);
+            }, cancellationToken);
 
         return true;
     }

@@ -4,8 +4,6 @@ namespace GameStore.Domain.Games;
 
 public record Genre
 {
-    public string Value { get; init; }
-
     public Genre(string value)
     {
         Check.NotEmpty(value, nameof(value));
@@ -14,6 +12,15 @@ public record Genre
         Value = value;
     }
 
-    public static implicit operator string(Genre genre) => genre.Value;
-    public static implicit operator Genre(string genre) => new(genre);
+    public string Value { get; init; }
+
+    public static implicit operator string(Genre genre)
+    {
+        return genre.Value;
+    }
+
+    public static implicit operator Genre(string genre)
+    {
+        return new Genre(genre);
+    }
 }

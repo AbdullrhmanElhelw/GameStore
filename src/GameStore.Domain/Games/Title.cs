@@ -4,8 +4,6 @@ namespace GameStore.Domain.Games;
 
 public record Title
 {
-    public string Value { get; init; }
-
     public Title(string value)
     {
         Check.NotEmpty(value, nameof(value));
@@ -14,7 +12,15 @@ public record Title
         Value = value;
     }
 
-    public static implicit operator string(Title title) => title.Value;
+    public string Value { get; init; }
 
-    public static implicit operator Title(string title) => new(title);
+    public static implicit operator string(Title title)
+    {
+        return title.Value;
+    }
+
+    public static implicit operator Title(string title)
+    {
+        return new Title(title);
+    }
 }

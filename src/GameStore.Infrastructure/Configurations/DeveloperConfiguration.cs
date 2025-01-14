@@ -28,20 +28,20 @@ internal sealed class DeveloperConfiguration : IEntityTypeConfiguration<Develope
             .HasConversion(email => email.Value, email => new Email(email));
 
         builder.OwnsOne(developer => developer.Headquarters, headquartersBuilder =>
-            {
-                headquartersBuilder.Property(headquarters => headquarters.Country)
-                    .HasMaxLength(100)
-                    .HasConversion(country => country.Value, country => new Country(country));
-                headquartersBuilder.Property(headquarters => headquarters.City)
-                    .HasMaxLength(100)
-                    .HasConversion(city => city.Value, city => new City(city));
-                headquartersBuilder.Property(headquarters => headquarters.Street)
-                    .HasMaxLength(100)
-                    .HasConversion(street => street.Value, street => new Street(street));
-                headquartersBuilder.Property(headquarters => headquarters.ZipCode)
-                    .HasMaxLength(20)
-                    .HasConversion(zipCode => zipCode.Value, zipCode => new ZipCode(zipCode));
-            });
+        {
+            headquartersBuilder.Property(headquarters => headquarters.Country)
+                .HasMaxLength(100)
+                .HasConversion(country => country.Value, country => new Country(country));
+            headquartersBuilder.Property(headquarters => headquarters.City)
+                .HasMaxLength(100)
+                .HasConversion(city => city.Value, city => new City(city));
+            headquartersBuilder.Property(headquarters => headquarters.Street)
+                .HasMaxLength(100)
+                .HasConversion(street => street.Value, street => new Street(street));
+            headquartersBuilder.Property(headquarters => headquarters.ZipCode)
+                .HasMaxLength(20)
+                .HasConversion(zipCode => zipCode.Value, zipCode => new ZipCode(zipCode));
+        });
 
         builder.HasMany(developer => developer.Games)
             .WithOne(game => game.Developer)

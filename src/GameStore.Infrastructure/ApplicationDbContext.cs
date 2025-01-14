@@ -13,17 +13,17 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
     public DbSet<Developer> Developers => Set<Developer>();
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-        base.OnModelCreating(modelBuilder);
-    }
-
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var result = await base.SaveChangesAsync(cancellationToken);
         await PublishDomainEventAsync();
         return result;
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        base.OnModelCreating(modelBuilder);
     }
 
     private async Task PublishDomainEventAsync()
@@ -39,9 +39,6 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             })
             .ToList();
 
-        foreach (var domainEvent in domainEntities)
-        {
-            await mediator.Publish(domainEvent);
-        }
+        foreach (var domainEvent in domainEntities) await mediator.Publish(domainEvent);
     }
 }

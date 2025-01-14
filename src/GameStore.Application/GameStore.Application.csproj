@@ -4,11 +4,13 @@
 		<TargetFramework>net9.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<UserSecretsId>abed3c5d-2cb8-42c4-bdc0-474ecafbf1d0</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
 	  <PackageReference Include="MediatR" Version="12.4.1" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
